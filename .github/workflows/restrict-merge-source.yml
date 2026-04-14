@@ -15,7 +15,7 @@ jobs:
         run: |
           if [ "${{ github.base_ref }}" == "main" ]; then
             if [ "${{ github.head_ref }}" != "dev" ] && [ "${{ github.head_ref }}" != "docs" ]; then
-              echo "PRs to master are only allowed from the 'dev' or 'docs' branch."
+              echo "PRs to main are only allowed from the 'dev' or 'docs' branch."
               echo "Source branch was: ${{ github.head_ref }}"
               exit 1
             fi
