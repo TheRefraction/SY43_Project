@@ -3,7 +3,7 @@ name: Restrict merge source
 on:
   pull_request:
     branches:
-      - master
+      - main
       - dev
       - docs
 
@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check that PR source is 'dev'
         run: |
-          if [ "${{ github.base_ref }}" == "master" ]; then
+          if [ "${{ github.base_ref }}" == "main" ]; then
             if [ "${{ github.head_ref }}" != "dev" ] && [ "${{ github.head_ref }}" != "docs" ]; then
               echo "PRs to master are only allowed from the 'dev' or 'docs' branch."
               echo "Source branch was: ${{ github.head_ref }}"
@@ -21,8 +21,8 @@ jobs:
             fi
           fi
 
-          if [ "${{ github.base_ref }}" == "dev" ] && [ "${{ github.head_ref }}" == "master" ]; then
-            echo "Merges from 'master' to 'dev' are not allowed."
+          if [ "${{ github.base_ref }}" == "dev" ] && [ "${{ github.head_ref }}" == "main" ]; then
+            echo "Merges from 'main' to 'dev' are not allowed."
             exit 1
           fi
 
@@ -31,8 +31,8 @@ jobs:
             exit 1
           fi
 
-          if [ "${{ github.head_ref }}" == "docs" ] && [ "${{ github.base_ref }}" != "master" ]; then
-            echo "'docs' can only be merged into 'master'."
+          if [ "${{ github.head_ref }}" == "docs" ] && [ "${{ github.base_ref }}" != "main" ]; then
+            echo "'docs' can only be merged into 'main'."
             echo "Target branch was: ${{ github.base_ref }}"
             exit 1
           fi
