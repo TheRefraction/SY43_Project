@@ -1,4 +1,4 @@
-package fr.utbm.pilulito.ui.theme
+package com.example.senpos.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

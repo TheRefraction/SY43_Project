@@ -1,4 +1,4 @@
-package fr.utbm.pilulito
+package com.example.senpos
 
 import org.junit.Test
 

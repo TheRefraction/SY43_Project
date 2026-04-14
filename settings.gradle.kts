@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Pilulito"
+rootProject.name = "SenPos"
 include(":app")
  
