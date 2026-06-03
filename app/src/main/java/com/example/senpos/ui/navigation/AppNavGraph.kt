@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.senpos.ui.navigation.Route
+import com.example.senpos.ui.screens.TodayScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController) {
@@ -13,7 +13,7 @@ fun AppNavGraph(navController: NavHostController) {
         startDestination = Route.Today.route
     ) {
         composable(Route.Today.route) {
-            // TODO la vue d'aujourd'hui
+            TodayScreen(navController)
         }
 
         composable(Route.AddMedicationDosage.route) {

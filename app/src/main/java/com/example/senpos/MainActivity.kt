@@ -7,7 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.senpos.ui.navigation.AppNavGraph
+import com.example.senpos.ui.navigation.Route
 import com.example.senpos.ui.theme.SenPosTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,11 +20,11 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            val navController = rememberNavController()
+            val navController: NavHostController = rememberNavController()
 
             SenPosTheme {
                 Surface(Modifier.fillMaxSize()) {
-
+                    AppNavGraph(navController)
                 }
             }
         }

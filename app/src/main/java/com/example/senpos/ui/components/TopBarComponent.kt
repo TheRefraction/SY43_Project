@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -17,21 +17,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.senpos.R
 import com.example.senpos.ui.navigation.Route
 import com.example.senpos.ui.theme.SenPosTheme
 
 @Composable
-fun NavBarComponent(navController: NavHostController) {
+fun TopBarComponent(navController: NavHostController) {
     Row(modifier = Modifier.fillMaxWidth()
         .background(color = Color(0xFF228B22))
-        .padding(vertical = 24.dp),
+        .padding(top = 28.dp, bottom = 16.dp),
 
         horizontalArrangement = Arrangement.SpaceAround) {
 
@@ -40,8 +38,8 @@ fun NavBarComponent(navController: NavHostController) {
             colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
         ) {
             Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = stringResource(R.string.add_a_medication_and_dosage),
+                imageVector = Icons.Outlined.AccountCircle,
+                contentDescription = "Manage Account",
                 modifier = Modifier.size(48.dp)
             )
         }
@@ -51,8 +49,8 @@ fun NavBarComponent(navController: NavHostController) {
             modifier = Modifier.widthIn(max = 180.dp)
         ) {
             Text(
-                text = "Pharmacies near me",
-                fontSize = 24.sp
+                text = "Help",
+                fontSize = 42.sp
             )
         }
 
@@ -60,8 +58,8 @@ fun NavBarComponent(navController: NavHostController) {
             colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
         ) {
             Icon(
-                imageVector = Icons.Outlined.CalendarMonth,
-                contentDescription = stringResource(R.string.review_previous_days),
+                imageVector = Icons.Outlined.Settings,
+                contentDescription = "App settings",
                 modifier = Modifier.size(48.dp)
             )
         }
@@ -71,9 +69,9 @@ fun NavBarComponent(navController: NavHostController) {
 
 @Preview
 @Composable
-fun NavBarPreview() {
+fun TopBarPreview() {
     val navController = rememberNavController()
     SenPosTheme {
-        NavBarComponent(navController)
+        TopBarComponent(navController)
     }
 }
