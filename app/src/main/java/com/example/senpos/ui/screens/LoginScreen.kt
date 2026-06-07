@@ -2,7 +2,6 @@ package com.example.senpos.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,15 +11,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,21 +32,35 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.senpos.ui.components.NavBarComponent
+import com.example.senpos.ui.navigation.Route
 import com.example.senpos.ui.theme.SenPosTheme
+import com.example.senpos.viewmodels.AuthViewModel
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(
+    navController: NavHostController,
+    viewModel: AuthViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
 
-    var email by remember {mutableStateOf("")}
-    var password by remember {mutableStateOf("")}
+    var email    by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    LaunchedEffect(uiState.isLoggedIn) {
+        if (uiState.isLoggedIn) {
+            navController.navigate(Route.Today.route) {
+                popUpTo(Route.Login.route) { inclusive = true }
+            }
+        }
+    }
 
     Column(
-        verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        verticalArrangement   = Arrangement.Center,
+        horizontalAlignment   = Alignment.CenterHorizontally,
+        modifier              = Modifier
             .fillMaxSize()
             .padding(horizontal = 48.dp)
     ) {
@@ -55,73 +68,89 @@ fun LoginScreen(navController: NavHostController) {
             modifier = Modifier
                 .background(Color(0xFF228B22), shape = RoundedCornerShape(8.dp))
                 .padding(16.dp)
-        ){
+        ) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(horizontal = 32.dp)
-            ){
+                modifier            = Modifier.padding(horizontal = 32.dp)
+            ) {
                 Text(
-                    text = "Login",
-                    fontSize = 18.sp,
-                    color = Color.White,
+                    text       = "Login",
+                    fontSize   = 18.sp,
+                    color      = Color.White,
                     fontWeight = FontWeight.Bold
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    placeholder = { Text("johndoe@email.com") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = OutlinedTextFieldDefaults.colors(
+                    value         = email,
+                    onValueChange = {
+                        email = it
+                        viewModel.clearError()
+                    },
+                    placeholder   = { Text("johndoe@email.com") },
+                    singleLine    = true,
+                    modifier      = Modifier.fillMaxWidth(),
+                    colors        = OutlinedTextFieldDefaults.colors(
                         unfocusedContainerColor = Color.White,
-                        focusedContainerColor = Color.White,
-                        unfocusedBorderColor = Color.Gray,
-                        focusedBorderColor = Color.Black,
+                        focusedContainerColor   = Color.White,
+                        unfocusedBorderColor    = Color.Gray,
+                        focusedBorderColor      = Color.Black,
                     )
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "Password",
-                    fontSize = 18.sp,
-                    color = Color.White,
+                    text       = "Password",
+                    fontSize   = 18.sp,
+                    color      = Color.White,
                     fontWeight = FontWeight.Bold
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    placeholder = { Text("Password") },
-                    singleLine = true,
+                    value               = password,
+                    onValueChange       = {
+                        password = it
+                        viewModel.clearError()
+                    },
+                    placeholder         = { Text("Password") },
+                    singleLine          = true,
                     visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = OutlinedTextFieldDefaults.colors(
+                    modifier            = Modifier.fillMaxWidth(),
+                    colors              = OutlinedTextFieldDefaults.colors(
                         unfocusedContainerColor = Color.White,
-                        focusedContainerColor = Color.White,
-                        unfocusedBorderColor = Color.Gray,
-                        focusedBorderColor = Color.Black,
+                        focusedContainerColor   = Color.White,
+                        unfocusedBorderColor    = Color.Gray,
+                        focusedBorderColor      = Color.Black,
                     )
                 )
+
+                // Message d'erreur
+                if (uiState.errorMessage != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text     = uiState.errorMessage!!,
+                        color    = Color(0xFFFFCCCC),
+                        fontSize = 14.sp
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 OutlinedButton(
-                    onClick = {},
-                    colors = ButtonDefaults.outlinedButtonColors(
+                    onClick  = { viewModel.login(email, password) },
+                    enabled  = !uiState.isLoading,
+                    colors   = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.LightGray,
                     ),
-                    border = BorderStroke(1.dp, Color.Gray)
+                    border   = BorderStroke(1.dp, Color.Gray)
                 ) {
                     Text(
-                        text = "Sign in",
+                        text  = if (uiState.isLoading) "Signing in..." else "Sign in",
                         color = Color.DarkGray,
                     )
                 }
@@ -130,13 +159,11 @@ fun LoginScreen(navController: NavHostController) {
             }
         }
 
-        TextButton(
-            onClick = {},
-        ) {
+        TextButton(onClick = { /* TODO: navigate to register */ }) {
             Text(
-                text = "Don't have an account? Click here",
+                text     = "Don't have an account? Click here",
                 fontSize = 18.sp,
-                color = Color(0xFFFF6C00),
+                color    = Color(0xFFFF6C00),
             )
         }
     }
@@ -144,7 +171,7 @@ fun LoginScreen(navController: NavHostController) {
 
 @Composable
 @Preview
-fun LoginPreview(){
+fun LoginPreview() {
     val navController = rememberNavController()
     SenPosTheme {
         LoginScreen(navController)
