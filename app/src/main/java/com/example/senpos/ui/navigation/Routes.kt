@@ -5,4 +5,5 @@ sealed class Route(val route: String) {
     object AddMedicationDosage: Route("add_med_dosage")
     object History: Route("history")
     object Login: Route("login")
+    object Signup: Route("signup")
 }
