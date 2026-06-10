@@ -49,6 +49,11 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    fun signup(name: String, surname: String, email: String, password: String){
+        /*TODO manage db*/
+        /*Didn't even add to dummyUsers cause it's read only*/
+    }
+
     fun logout() {
         _uiState.value = AuthUiState()
     }
