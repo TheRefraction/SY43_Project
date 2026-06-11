@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.senpos.ui.AppViewModelProvider
 import com.example.senpos.ui.navigation.Route
 import com.example.senpos.ui.theme.SenPosTheme
 import com.example.senpos.viewmodels.AuthViewModel
@@ -42,7 +43,7 @@ import com.example.senpos.viewmodels.AuthViewModel
 @Composable
 fun LoginScreen(
     navController: NavHostController,
-    viewModel: AuthViewModel = viewModel()
+    viewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -159,7 +160,7 @@ fun LoginScreen(
             }
         }
 
-        TextButton(onClick = { /* TODO: navigate to register */ }) {
+        TextButton(onClick = { navController.navigate(Route.Signup.route) }) {
             Text(
                 text     = "Don't have an account? Click here",
                 fontSize = 18.sp,
