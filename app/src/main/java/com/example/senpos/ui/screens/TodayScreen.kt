@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.senpos.ui.AppViewModelProvider
 import com.example.senpos.ui.components.IntakeComponent
 import com.example.senpos.ui.components.NavBarComponent
 import com.example.senpos.ui.components.OverdueIntakeComponent
@@ -32,7 +33,7 @@ import com.example.senpos.viewmodels.HomeViewModel
 @Composable
 fun TodayScreen(
     navController: NavHostController,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

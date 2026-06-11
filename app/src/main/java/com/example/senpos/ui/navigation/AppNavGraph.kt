@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.senpos.ui.screens.LoginScreen
+import com.example.senpos.ui.screens.PharmacyMapScreen
+import com.example.senpos.ui.screens.SignupScreen
 import com.example.senpos.ui.screens.TodayScreen
 
 @Composable
@@ -27,6 +29,14 @@ fun AppNavGraph(navController: NavHostController) {
 
         composable(Route.Login.route) {
             LoginScreen(navController)
+        }
+
+        composable(Route.Signup.route) {
+            SignupScreen(navController)
+        }
+
+        composable(Route.PharmacyMap.route) {
+            PharmacyMapScreen(navController)
         }
     }
 }

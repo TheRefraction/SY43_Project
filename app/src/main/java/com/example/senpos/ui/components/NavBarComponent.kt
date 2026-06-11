@@ -46,7 +46,7 @@ fun NavBarComponent(navController: NavHostController) {
             )
         }
 
-        Button(onClick = { navController.navigate(Route.Today.route) },
+        Button(onClick = { navController.navigate(Route.PharmacyMap.route) },
             colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
             modifier = Modifier.widthIn(max = 180.dp)
         ) {

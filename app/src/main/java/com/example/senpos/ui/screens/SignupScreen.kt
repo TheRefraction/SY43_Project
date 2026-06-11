@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.senpos.ui.AppViewModelProvider
 import com.example.senpos.ui.navigation.Route
 import com.example.senpos.ui.theme.SenPosTheme
 import com.example.senpos.viewmodels.AuthViewModel
@@ -42,7 +43,7 @@ import com.example.senpos.viewmodels.AuthViewModel
 @Composable
 fun SignupScreen(
     navController: NavHostController,
-    viewModel: AuthViewModel = viewModel()
+    viewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -51,11 +52,10 @@ fun SignupScreen(
     var email    by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    LaunchedEffect(uiState.isLoggedIn) {
-        if (uiState.isLoggedIn) {
-            navController.navigate(Route.Today.route) {
-                popUpTo(Route.Signup.route) { inclusive = true }
-            }
+    LaunchedEffect(uiState.isSignupSuccessful) {
+        if (uiState.isSignupSuccessful) {
+            viewModel.resetSignupState()
+            navController.popBackStack()
         }
     }
 
@@ -224,6 +224,14 @@ fun SignupScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
             }
+        }
+
+        TextButton(onClick = { navController.popBackStack() }) {
+            Text(
+                text     = "Already have an account? Login here",
+                fontSize = 18.sp,
+                color    = Color(0xFFFF6C00),
+            )
         }
     }
 }
