@@ -15,8 +15,12 @@ mapsCompose = "8.3.0"
 playServicesMaps = "20.0.0"
 playServicesLocation = "21.3.0"
 places = "5.2.0"
+workManager = "2.10.1"
+lifecycleViewmodelKtx = "2.10.0"
 
 [libraries]
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

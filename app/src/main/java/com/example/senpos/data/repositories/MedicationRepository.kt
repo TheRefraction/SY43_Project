@@ -15,6 +15,8 @@ interface MedicationRepository {
     val plans: StateFlow<List<MedicationPlan>>
     
     suspend fun updateIntakeStatus(intakeId: String, status: IntakeStatus)
+    suspend fun addPlan(plan: MedicationPlan)
+    suspend fun addIntakes(intakes: List<MedicationIntake>)
 }
 
 class OfflineMedicationRepository : MedicationRepository {
@@ -66,4 +68,12 @@ class OfflineMedicationRepository : MedicationRepository {
 
     private fun daysAgoAt(days: Int, hour: Int): Long =
         todayAt(hour) - days * 24 * 60 * 60 * 1000L
+
+    override suspend fun addPlan(plan: MedicationPlan) {
+        _plans.value += plan
+    }
+
+    override suspend fun addIntakes(intakes: List<MedicationIntake>) {
+        _intakes.value += intakes
+    }
 }

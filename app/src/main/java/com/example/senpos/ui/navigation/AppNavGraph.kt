@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.senpos.ui.screens.AddPosologyScreen
 import com.example.senpos.ui.screens.LoginScreen
 import com.example.senpos.ui.screens.PharmacyMapScreen
 import com.example.senpos.ui.screens.SignupScreen
@@ -19,8 +20,8 @@ fun AppNavGraph(navController: NavHostController) {
             TodayScreen(navController)
         }
 
-        composable(Route.AddMedicationDosage.route) {
-            // TODO la vue d'ajout de medocs
+        composable(Route.AddPosology.route) {
+            AddPosologyScreen(navController)
         }
 
         composable(Route.History.route) {
