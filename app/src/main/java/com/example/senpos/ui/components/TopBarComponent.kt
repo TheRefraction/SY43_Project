@@ -17,11 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.senpos.notifications.NotificationHelper
 import com.example.senpos.ui.navigation.Route
 import com.example.senpos.ui.theme.SenPosTheme
 
@@ -33,8 +35,19 @@ fun TopBarComponent(navController: NavHostController) {
 
         horizontalArrangement = Arrangement.SpaceAround) {
 
+        val context = LocalContext.current
 
-        Button(onClick = { navController.navigate(Route.AddMedicationDosage.route) },
+        Button(
+            onClick = {
+
+                NotificationHelper.sendIntakeReminder(
+                    context,
+                    "Doliprane",
+                    "1000mg",
+                    123
+                )
+            },
+
             colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
         ) {
             Icon(

@@ -36,7 +36,7 @@ fun NavBarComponent(navController: NavHostController) {
         horizontalArrangement = Arrangement.SpaceAround) {
 
 
-        Button(onClick = { navController.navigate(Route.AddMedicationDosage.route) },
+        Button(onClick = { navController.navigate(Route.AddPosology.route) },
             colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
         ) {
             Icon(

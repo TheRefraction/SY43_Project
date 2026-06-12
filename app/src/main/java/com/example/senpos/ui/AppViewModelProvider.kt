@@ -1,10 +1,14 @@
 package com.example.senpos.ui
 
+import android.app.Application
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.senpos.PillulitoApplication
+import com.example.senpos.viewmodels.AddPosologyViewModel
 import com.example.senpos.viewmodels.AuthViewModel
 import com.example.senpos.viewmodels.HomeViewModel
 import com.example.senpos.viewmodels.PharmacyViewModel
@@ -19,6 +23,16 @@ object AppViewModelProvider {
         }
         initializer {
             HomeViewModel(pillulitoApplication().container.medicationRepository)
+        }
+        initializer {
+            val application =
+                this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]
+                        as PillulitoApplication
+
+            AddPosologyViewModel(
+                application,
+                application.container.medicationRepository
+            )
         }
     }
 }
