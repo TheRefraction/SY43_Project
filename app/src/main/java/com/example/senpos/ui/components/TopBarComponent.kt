@@ -62,7 +62,7 @@ fun TopBarComponent(navController: NavHostController) {
             modifier = Modifier.widthIn(max = 180.dp)
         ) {
             Text(
-                text = "Help",
+                text = "Today",
                 fontSize = 42.sp
             )
         }
