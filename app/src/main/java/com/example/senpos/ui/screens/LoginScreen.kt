@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.senpos.data.models.AccountType
 import com.example.senpos.ui.AppViewModelProvider
 import com.example.senpos.ui.navigation.Route
 import com.example.senpos.ui.theme.SenPosTheme
@@ -52,7 +53,11 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.isLoggedIn) {
         if (uiState.isLoggedIn) {
-            navController.navigate(Route.Today.route) {
+            val destination = when (uiState.currentUser?.accountType) {
+                AccountType.SUPERVISOR -> Route.Supervisor.route
+                else                   -> Route.Today.route
+            }
+            navController.navigate(destination) {
                 popUpTo(Route.Login.route) { inclusive = true }
             }
         }

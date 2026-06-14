@@ -39,13 +39,7 @@ fun TopBarComponent(navController: NavHostController) {
 
         Button(
             onClick = {
-
-                NotificationHelper.sendIntakeReminder(
-                    context,
-                    "Doliprane",
-                    "1000mg",
-                    123
-                )
+                navController.navigate(Route.Profile.route)
             },
 
             colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)

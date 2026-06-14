@@ -8,14 +8,21 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.senpos.PillulitoApplication
+import com.example.senpos.viewmodels.AccountInfoViewModel
 import com.example.senpos.viewmodels.AddPosologyViewModel
 import com.example.senpos.viewmodels.AuthViewModel
 import com.example.senpos.viewmodels.HistoryViewModel
 import com.example.senpos.viewmodels.HomeViewModel
 import com.example.senpos.viewmodels.PharmacyViewModel
+import com.example.senpos.viewmodels.SupervisorViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
+
+        initializer {
+            AccountInfoViewModel(pillulitoApplication().container.authRepository)
+        }
+
         initializer {
             PharmacyViewModel(pillulitoApplication().container.pharmacyRepository)
         }
@@ -28,6 +35,13 @@ object AppViewModelProvider {
 
         initializer {
             HistoryViewModel(pillulitoApplication().container.medicationRepository)
+        }
+
+        initializer {
+            SupervisorViewModel(
+                pillulitoApplication().container.authRepository,
+                pillulitoApplication().container.medicationRepository
+            )
         }
 
         initializer {
