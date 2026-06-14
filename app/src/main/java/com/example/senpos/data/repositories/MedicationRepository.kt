@@ -38,17 +38,17 @@ class OfflineMedicationRepository : MedicationRepository {
     override val plans: StateFlow<List<MedicationPlan>> = _plans.asStateFlow()
 
     private val _intakes = MutableStateFlow(listOf(
-        MedicationIntake(id = "t1", realIntakeTime = todayAt(7), status = IntakeStatus.PENDING, drugId = "drug_1", planId = "plan_1"),
+        MedicationIntake(id = "t1", realIntakeTime = todayAt(7),  status = IntakeStatus.TAKEN,   drugId = "drug_1", planId = "plan_1"),
         MedicationIntake(id = "t2", realIntakeTime = todayAt(15), status = IntakeStatus.PENDING, drugId = "drug_1", planId = "plan_1"),
         MedicationIntake(id = "t3", realIntakeTime = todayAt(23), status = IntakeStatus.PENDING, drugId = "drug_1", planId = "plan_1"),
-        MedicationIntake(id = "t4", realIntakeTime = todayAt(8), status = IntakeStatus.PENDING, drugId = "drug_2", planId = "plan_2"),
+        MedicationIntake(id = "t4", realIntakeTime = todayAt(8),  status = IntakeStatus.TAKEN,   drugId = "drug_2", planId = "plan_2"),
         MedicationIntake(id = "t5", realIntakeTime = todayAt(20), status = IntakeStatus.PENDING, drugId = "drug_2", planId = "plan_2"),
-        MedicationIntake(id = "t6", realIntakeTime = todayAt(9), status = IntakeStatus.PENDING, drugId = "drug_3", planId = "plan_3"),
-        MedicationIntake(id = "t7", realIntakeTime = todayAt(7, 30), status = IntakeStatus.PENDING, drugId = "drug_4", planId = "plan_4"),
-        MedicationIntake(id = "o1", realIntakeTime = daysAgoAt(1, 7), status = IntakeStatus.PENDING, drugId = "drug_1", planId = "plan_1"),
-        MedicationIntake(id = "o2", realIntakeTime = daysAgoAt(1, 15), status = IntakeStatus.PENDING, drugId = "drug_1", planId = "plan_1"),
-        MedicationIntake(id = "o3", realIntakeTime = daysAgoAt(1, 8), status = IntakeStatus.PENDING, drugId = "drug_2", planId = "plan_2"),
-        MedicationIntake(id = "o4", realIntakeTime = daysAgoAt(2, 9), status = IntakeStatus.PENDING, drugId = "drug_3", planId = "plan_3")
+        MedicationIntake(id = "t6", realIntakeTime = todayAt(9),  status = IntakeStatus.MISSED,  drugId = "drug_3", planId = "plan_3"),
+        MedicationIntake(id = "t7", realIntakeTime = todayAt(7, 30), status = IntakeStatus.TAKEN, drugId = "drug_4", planId = "plan_4"),
+        MedicationIntake(id = "o1", realIntakeTime = daysAgoAt(1, 7),  status = IntakeStatus.TAKEN,  drugId = "drug_1", planId = "plan_1"),
+        MedicationIntake(id = "o2", realIntakeTime = daysAgoAt(1, 15), status = IntakeStatus.MISSED, drugId = "drug_1", planId = "plan_1"),
+        MedicationIntake(id = "o3", realIntakeTime = daysAgoAt(1, 8),  status = IntakeStatus.TAKEN,  drugId = "drug_2", planId = "plan_2"),
+        MedicationIntake(id = "o4", realIntakeTime = daysAgoAt(2, 9),  status = IntakeStatus.MISSED, drugId = "drug_3", planId = "plan_3")
     ))
     override val intakes: StateFlow<List<MedicationIntake>> = _intakes.asStateFlow()
 

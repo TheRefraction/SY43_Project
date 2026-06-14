@@ -7,4 +7,6 @@ sealed class Route(val route: String) {
     object Login: Route("login")
     object Signup: Route("signup")
     object PharmacyMap: Route("pharmacy_map")
+    object Supervisor : Route("supervisor")
+    object Profile : Route("profile")
 }

@@ -4,12 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.senpos.ui.screens.AccountInfoScreen
 import com.example.senpos.ui.screens.AddPosologyScreen
 import com.example.senpos.ui.screens.HistoryScreen
 import com.example.senpos.ui.screens.LoginScreen
 import com.example.senpos.ui.screens.PharmacyMapScreen
 import com.example.senpos.ui.screens.SignupScreen
 import com.example.senpos.ui.screens.TodayScreen
+import com.example.senpos.ui.screens.SupervisorScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController) {
@@ -39,6 +41,14 @@ fun AppNavGraph(navController: NavHostController) {
 
         composable(Route.PharmacyMap.route) {
             PharmacyMapScreen(navController)
+        }
+
+        composable(Route.Supervisor.route) {
+            SupervisorScreen(navController)
+        }
+
+        composable(Route.Profile.route) {
+            AccountInfoScreen(navController)
         }
     }
 }

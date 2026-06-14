@@ -2,6 +2,7 @@ package com.example.senpos.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.senpos.data.models.AccountType
 import com.example.senpos.data.models.User
 import com.example.senpos.data.repositories.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,14 +49,33 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         }
     }
 
-    fun signup(name: String, surname: String, email: String, password: String) {
+    fun signup(
+        name: String,
+        surname: String,
+        email: String,
+        password: String,
+        accountType: AccountType,
+        supervisorLinkCode: String? = null
+    ) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null, isSignupSuccessful = false)
-            val user = authRepository.signup(name, surname, email, password)
+
+            if (accountType == AccountType.SUPERVISOR && supervisorLinkCode.isNullOrBlank()) {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    errorMessage = "Please enter the senior's link code."
+                )
+                return@launch
+            }
+
+            val user = authRepository.signup(name, surname, email, password, accountType, supervisorLinkCode)
             if (user == null) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    errorMessage = "Erreur lors de l'inscription."
+                    errorMessage = if (accountType == AccountType.SUPERVISOR)
+                        "Invalid link code or email already used."
+                    else
+                        "Error during signup."
                 )
             } else {
                 _uiState.value = _uiState.value.copy(isLoading = false, isSignupSuccessful = true)
