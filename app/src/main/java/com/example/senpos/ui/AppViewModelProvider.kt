@@ -10,6 +10,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.senpos.PillulitoApplication
 import com.example.senpos.viewmodels.AddPosologyViewModel
 import com.example.senpos.viewmodels.AuthViewModel
+import com.example.senpos.viewmodels.HistoryViewModel
 import com.example.senpos.viewmodels.HomeViewModel
 import com.example.senpos.viewmodels.PharmacyViewModel
 
@@ -24,6 +25,11 @@ object AppViewModelProvider {
         initializer {
             HomeViewModel(pillulitoApplication().container.medicationRepository)
         }
+
+        initializer {
+            HistoryViewModel(pillulitoApplication().container.medicationRepository)
+        }
+
         initializer {
             val application =
                 this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]

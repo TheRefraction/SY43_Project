@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.senpos.ui.screens.AddPosologyScreen
+import com.example.senpos.ui.screens.HistoryScreen
 import com.example.senpos.ui.screens.LoginScreen
 import com.example.senpos.ui.screens.PharmacyMapScreen
 import com.example.senpos.ui.screens.SignupScreen
@@ -25,7 +26,7 @@ fun AppNavGraph(navController: NavHostController) {
         }
 
         composable(Route.History.route) {
-            // TODO la vue de calendrier
+            HistoryScreen(navController)
         }
 
         composable(Route.Login.route) {

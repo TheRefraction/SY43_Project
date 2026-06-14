@@ -62,7 +62,7 @@ fun PharmacyMapScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Pharmacies à proximité") },
+                title = { Text("Nearby Pharmacies") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Filled.ArrowBackIosNew, contentDescription = "Retour")
