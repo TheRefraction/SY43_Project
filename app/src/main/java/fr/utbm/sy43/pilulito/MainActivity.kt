@@ -1,0 +1,36 @@
+package fr.utbm.sy43.pilulito
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import fr.utbm.sy43.pilulito.ui.navigation.AppNavGraph
+import fr.utbm.sy43.pilulito.ui.theme.SenPosTheme
+
+
+//temp imports
+import androidx.lifecycle.lifecycleScope
+import fr.utbm.sy43.pilulito.data.models.IntakeStatus
+import fr.utbm.sy43.pilulito.data.models.MedicationIntake
+import kotlinx.coroutines.launch
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            val navController: NavHostController = rememberNavController()
+
+            SenPosTheme {
+                Surface(Modifier.fillMaxSize()) {
+                    AppNavGraph(navController)
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "754751899243",
+    "project_id": "sy43-project-1ca2c",
+    "storage_bucket": "sy43-project-1ca2c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754751899243:android:fe8c0198861283b92fd32e",
+        "android_client_info": {
+          "package_name": "fr.utbm.sy43.pilulito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754751899243-gbpguoktddsdn8j7tot7c3neaitcqufk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbacMj212UixEATC3yJXVJg5fc1f2fvCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754751899243-gbpguoktddsdn8j7tot7c3neaitcqufk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
