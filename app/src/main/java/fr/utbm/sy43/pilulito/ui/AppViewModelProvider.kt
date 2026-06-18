@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import fr.utbm.sy43.pilulito.PillulitoApplication
+import fr.utbm.sy43.pilulito.PilulitoApplication
 import fr.utbm.sy43.pilulito.viewmodels.AccountInfoViewModel
 import fr.utbm.sy43.pilulito.viewmodels.AddPosologyViewModel
 import fr.utbm.sy43.pilulito.viewmodels.AuthViewModel
@@ -17,34 +17,34 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
 
         initializer {
-            AccountInfoViewModel(pillulitoApplication().container.authRepository)
+            AccountInfoViewModel(pilulitoApplication().container.authRepository)
         }
 
         initializer {
-            PharmacyViewModel(pillulitoApplication().container.pharmacyRepository)
+            PharmacyViewModel(pilulitoApplication().container.pharmacyRepository)
         }
         initializer {
-            AuthViewModel(pillulitoApplication().container.authRepository)
+            AuthViewModel(pilulitoApplication().container.authRepository)
         }
         initializer {
-            HomeViewModel(pillulitoApplication().container.medicationRepository)
+            HomeViewModel(pilulitoApplication().container.medicationRepository)
         }
 
         initializer {
-            HistoryViewModel(pillulitoApplication().container.medicationRepository)
+            HistoryViewModel(pilulitoApplication().container.medicationRepository)
         }
 
         initializer {
             SupervisorViewModel(
-                pillulitoApplication().container.authRepository,
-                pillulitoApplication().container.medicationRepository
+                pilulitoApplication().container.authRepository,
+                pilulitoApplication().container.medicationRepository
             )
         }
 
         initializer {
             val application =
                 this[AndroidViewModelFactory.APPLICATION_KEY]
-                        as PillulitoApplication
+                        as PilulitoApplication
 
             AddPosologyViewModel(
                 application,
@@ -54,5 +54,5 @@ object AppViewModelProvider {
     }
 }
 
-fun CreationExtras.pillulitoApplication(): PillulitoApplication =
-    (this[AndroidViewModelFactory.APPLICATION_KEY] as PillulitoApplication)
+fun CreationExtras.pilulitoApplication(): PilulitoApplication =
+    (this[AndroidViewModelFactory.APPLICATION_KEY] as PilulitoApplication)

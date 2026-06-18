@@ -3,7 +3,7 @@ package fr.utbm.sy43.pilulito.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import fr.utbm.sy43.pilulito.PillulitoApplication
+import fr.utbm.sy43.pilulito.PilulitoApplication
 import fr.utbm.sy43.pilulito.data.models.IntakeStatus
 import fr.utbm.sy43.pilulito.notifications.NotificationHelper
 import java.util.Calendar
@@ -14,7 +14,7 @@ class OverdueCheckWorker(
 ) : CoroutineWorker(ctx, params) {
 
     override suspend fun doWork(): Result {
-        val repo = (applicationContext as PillulitoApplication)
+        val repo = (applicationContext as PilulitoApplication)
             .container.medicationRepository
 
         val now        = System.currentTimeMillis()

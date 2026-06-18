@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name="fr.utbm.sy43.pilulito.PillulitoApplication"
+        android:name="fr.utbm.sy43.pilulito.PilulitoApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

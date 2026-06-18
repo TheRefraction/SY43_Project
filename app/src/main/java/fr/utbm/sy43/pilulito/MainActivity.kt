@@ -12,13 +12,6 @@ import androidx.navigation.compose.rememberNavController
 import fr.utbm.sy43.pilulito.ui.navigation.AppNavGraph
 import fr.utbm.sy43.pilulito.ui.theme.SenPosTheme
 
-
-//temp imports
-import androidx.lifecycle.lifecycleScope
-import fr.utbm.sy43.pilulito.data.models.IntakeStatus
-import fr.utbm.sy43.pilulito.data.models.MedicationIntake
-import kotlinx.coroutines.launch
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import fr.utbm.sy43.pilulito.PillulitoApplication
+import fr.utbm.sy43.pilulito.PilulitoApplication
 import fr.utbm.sy43.pilulito.data.models.Drug
 import fr.utbm.sy43.pilulito.data.models.IntakeStatus
 import fr.utbm.sy43.pilulito.data.models.MedicationIntake
@@ -44,7 +44,7 @@ class AddPosologyViewModel(
 ) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(AddPosologyUiState())
-    private val context: Context get() = getApplication<PillulitoApplication>()
+    private val context: Context get() = getApplication<PilulitoApplication>()
     val uiState: StateFlow<AddPosologyUiState> = _uiState.asStateFlow()
 
     init {

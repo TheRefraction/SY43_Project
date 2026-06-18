@@ -11,9 +11,8 @@ import fr.utbm.sy43.pilulito.notifications.NotificationHelper
 import fr.utbm.sy43.pilulito.workers.OverdueCheckWorker
 import com.google.android.libraries.places.api.Places
 import java.util.concurrent.TimeUnit
-import fr.utbm.sy43.pilulito.R
 
-class PillulitoApplication : Application() {
+class PilulitoApplication : Application() {
     lateinit var container: AppContainer
 
     override fun onCreate() {
