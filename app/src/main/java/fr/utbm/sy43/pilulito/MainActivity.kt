@@ -18,8 +18,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController: NavHostController = rememberNavController()
+            val themeState    = remember { ThemeState() }
 
-            SenPosTheme {
+            SenPosTheme (themeState = themeState) {
                 Surface(Modifier.fillMaxSize()) {
                     AppNavGraph(navController)
                 }

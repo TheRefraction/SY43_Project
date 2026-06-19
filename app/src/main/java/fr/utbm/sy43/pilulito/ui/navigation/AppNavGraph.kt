@@ -9,6 +9,7 @@ import fr.utbm.sy43.pilulito.ui.screens.AddPosologyScreen
 import fr.utbm.sy43.pilulito.ui.screens.HistoryScreen
 import fr.utbm.sy43.pilulito.ui.screens.LoginScreen
 import fr.utbm.sy43.pilulito.ui.screens.PharmacyMapScreen
+import fr.utbm.sy43.pilulito.ui.screens.SettingsScreen
 import fr.utbm.sy43.pilulito.ui.screens.SignupScreen
 import fr.utbm.sy43.pilulito.ui.screens.TodayScreen
 import fr.utbm.sy43.pilulito.ui.screens.SupervisorScreen
@@ -29,6 +30,10 @@ fun AppNavGraph(navController: NavHostController) {
 
         composable(Route.History.route) {
             HistoryScreen(navController)
+        }
+
+        composable(Route.Settings.route) {
+            SettingsScreen(navController)
         }
 
         composable(Route.Login.route) {
