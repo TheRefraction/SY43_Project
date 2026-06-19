@@ -1,13 +1,22 @@
 package fr.utbm.sy43.pilulito.ui.screens
 
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,11 +72,42 @@ fun AccountInfoScreen(
                 }
             }
 
+            val infiniteTransition = rememberInfiniteTransition(label = "cardGradient")
+
+            val colorShift1 by infiniteTransition.animateFloat(
+                initialValue = 0f,
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 4000, easing = LinearEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "colorShift1"
+            )
+            val colorShift2 by infiniteTransition.animateFloat(
+                initialValue = 1f,
+                targetValue = 0f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 4000, easing = LinearEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "colorShift2"
+            )
+
             Card(
                 shape     = RoundedCornerShape(20.dp),
-                colors    = CardDefaults.cardColors(containerColor = OrangeLight),
+                colors    = CardDefaults.cardColors(containerColor = Color.Transparent),
                 elevation = CardDefaults.cardElevation(0.dp),
-                modifier  = Modifier.fillMaxWidth()
+                modifier  = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                lerp(Color(0xFFFFE0B2), Color(0xFFFF8A65), colorShift1),
+                                lerp(Color(0xFFFFCC80), Color(0xFFE64A19), colorShift2)
+                            )
+                        ),
+                        shape = RoundedCornerShape(20.dp)
+                    )
             ) {
                 Column(
                     modifier = Modifier.padding(20.dp),
@@ -83,7 +123,7 @@ fun AccountInfoScreen(
                         text       = uiState.linkCode,
                         fontSize   = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        color      = Orange
+                        color      = Color(0xFFE53935)
                     )
                     Text(
                         text     = "Share this code with a family member so they can follow your medication.",
@@ -93,6 +133,7 @@ fun AccountInfoScreen(
                     )
                 }
             }
+
 
             Spacer(modifier = Modifier.weight(1f))
 
