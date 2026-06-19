@@ -63,9 +63,10 @@ class SettingsViewModel(
         }
     }
 
-    fun deleteAccount() {
+    fun deleteAccount(onAccountDeleted: () -> Unit) {
         viewModelScope.launch {
             authRepository.deleteAccount()
+            onAccountDeleted()
         }
     }
 

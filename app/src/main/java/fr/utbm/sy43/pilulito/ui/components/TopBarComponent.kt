@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.senpos.ui.theme.SenPosTheme
+import fr.utbm.sy43.pilulito.ui.theme.SenPosTheme
 import fr.utbm.sy43.pilulito.ui.navigation.Route
 
 

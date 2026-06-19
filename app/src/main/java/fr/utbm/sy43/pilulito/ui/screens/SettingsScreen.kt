@@ -159,10 +159,10 @@ fun SettingsScreen(
                 text             = { Text("This action is permanent. Your account will be deleted.") },
                 confirmButton    = {
                     TextButton(onClick = {
-                        viewModel.deleteAccount()
-                        navController.navigate(Route.Login.route) {
+                        viewModel.deleteAccount(onAccountDeleted = {
+                            navController.navigate(Route.Login.route) {
                             popUpTo(0) { inclusive = true }
-                        }
+                        }})
                     }) {
                         Text("Delete", color = Color(0xFFE53935), fontWeight = FontWeight.Bold)
                     }
