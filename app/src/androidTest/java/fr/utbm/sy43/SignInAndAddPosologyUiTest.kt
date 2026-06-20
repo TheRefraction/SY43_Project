@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SignUpAndAddPosologyUiTest {
+class SignInAndAddPosologyUiTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -17,16 +17,11 @@ class SignUpAndAddPosologyUiTest {
     @Test
     fun savePrescription_fillsFormAndSaves() {
 
-        composeTestRule.onNodeWithText("Don't have an account? Click here").performClick()
-        composeTestRule.waitForIdle()
-
-        composeTestRule.onNodeWithTag("Name").performTextInput("John")
-        composeTestRule.onNodeWithTag("Surname").performTextInput("Doe")
-        composeTestRule.onNodeWithTag("Login").performTextInput("johndoe@aaaaaa.com")
+        composeTestRule.onNodeWithTag("Email").performTextInput("johndoe@test.com")
         composeTestRule.onNodeWithTag("Password").performTextInput("johndoe1234")
         composeTestRule.waitForIdle()
 
-        composeTestRule.onNodeWithText("Sign up").performClick()
+        composeTestRule.onNodeWithText("Sign in").performClick()
         composeTestRule.waitForIdle()
 
         composeTestRule.onRoot().printToLog("UI_TREE")
@@ -48,6 +43,10 @@ class SignUpAndAddPosologyUiTest {
         composeTestRule.onNodeWithText("Save prescription").performClick()
         composeTestRule.waitForIdle()
 
-        composeTestRule.onNodeWithText("Doliprane").assertIsDisplayed()
+        composeTestRule.onRoot().printToLog("UI_TREE")
+
+        composeTestRule.onAllNodesWithText("Doliprane", substring = true)
+            .onFirst()
+            .assertIsDisplayed()
     }
 }
