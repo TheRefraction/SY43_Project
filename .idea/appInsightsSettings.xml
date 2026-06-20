@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="fr.utbm.sy43.pilulito" />
+                  <option name="mobileSdkAppId" value="1:754751899243:android:7abd659c4fdab0a32fd32e" />
+                  <option name="projectId" value="sy43-project-1ca2c" />
+                  <option name="projectNumber" value="754751899243" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
