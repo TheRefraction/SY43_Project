@@ -96,4 +96,16 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun clearError() {
         _uiState.value = _uiState.value.copy(errorMessage = null)
     }
+
+    //check if a session already exist
+    fun checkSession() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true)
+            authRepository.checkExistingSession()
+            _uiState.value = _uiState.value.copy(isLoading = false)
+        }
+    }
+
+
+
 }

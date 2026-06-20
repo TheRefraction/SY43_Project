@@ -25,6 +25,8 @@ interface AuthRepository {
     suspend fun updatePassword(newPassword: String)
     suspend fun deleteAccount()
 
+    suspend fun checkExistingSession(): User?
+
 }
 
 class OfflineAuthRepository : AuthRepository {
@@ -38,7 +40,7 @@ class OfflineAuthRepository : AuthRepository {
             firstName   = "Waltuh",
             lastName    = "HelpMe",
             email       = "im.a@labubu.waltuh",
-            password    = "feet",
+            //password    = "feet",
             accountType = AccountType.SENIOR,
             linkCode    = "WALT-1234"
         ),
@@ -48,7 +50,7 @@ class OfflineAuthRepository : AuthRepository {
             firstName      = "Jesse",
             lastName       = "Pinkman",
             email          = "jesse@supervisor.com",
-            password       = "yo",
+            //password       = "yo",
             accountType    = AccountType.SUPERVISOR,
             linkCode       = "JESSE-5678",
             linkedSeniorId = "user_1"
@@ -60,11 +62,15 @@ class OfflineAuthRepository : AuthRepository {
         users.removeAll { it.id == user.id }
         _currentUser.value = null
     }
-
+    //now password is sent in fireAuth, error with this old function
     override suspend fun login(email: String, password: String): User? {
+        return null
+        /*
         val user = users.find { it.email == email && it.password == password }
         _currentUser.value = user
         return user
+        */
+
     }
 
     override suspend fun signup(
@@ -92,7 +98,7 @@ class OfflineAuthRepository : AuthRepository {
             firstName      = name,
             lastName       = surname,
             email          = email,
-            password       = password,
+            //password       = password,
             accountType    = accountType,
             linkCode       = generateLinkCode(name),
             linkedSeniorId = linkedSeniorId
@@ -109,10 +115,14 @@ class OfflineAuthRepository : AuthRepository {
     }
 
     override suspend fun updatePassword(newPassword: String) {
+        return
+        /*
         val user = _currentUser.value ?: return
         val updated = user.copy(password = newPassword)
         users.replaceAll { if (it.id == user.id) updated else it }
         _currentUser.value = updated
+        */
+
     }
 
     override suspend fun findSeniorByLinkCode(linkCode: String): User? {
@@ -129,5 +139,10 @@ class OfflineAuthRepository : AuthRepository {
         val prefix = name.take(4).uppercase().ifBlank { "USER" }
         val suffix = (1000..9999).random()
         return "$prefix-$suffix"
+    }
+
+    //just to implement interface
+    override suspend fun checkExistingSession(): User?{
+        return  null
     }
 }
