@@ -52,6 +52,12 @@ fun LoginScreen(
     var email    by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+
+    //check for already existing session
+    LaunchedEffect(Unit) {
+        viewModel.checkSession()
+    }
+
     LaunchedEffect(uiState.isLoggedIn) {
         if (uiState.isLoggedIn) {
             val destination = when (uiState.currentUser?.accountType) {

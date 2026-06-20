@@ -10,7 +10,7 @@ data class User(
     val firstName: String = "",
     val lastName: String = "",
     val email: String = "",
-    val password: String = "",
+    //val password: String = "",
     val accountType: AccountType = AccountType.SENIOR,
     val linkCode: String = "",
     val linkedSeniorId: String? = null
