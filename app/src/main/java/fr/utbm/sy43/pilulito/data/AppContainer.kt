@@ -9,6 +9,7 @@ import fr.utbm.sy43.pilulito.data.repositories.OfflineMedicationRepository
 import fr.utbm.sy43.pilulito.data.repositories.PharmacyRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import fr.utbm.sy43.pilulito.data.models.AccountType
 import fr.utbm.sy43.pilulito.data.repositories.FirestoreAuthRepository
 import fr.utbm.sy43.pilulito.data.repositories.FirestoreMedicationRepository
 
@@ -38,10 +39,22 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     }
 
     override val authRepository: AuthRepository by lazy {
-        FirestoreAuthRepository(firestore)
+        FirestoreAuthRepository(firestore, firebaseAuth)
     }
 
     override val medicationRepository: MedicationRepository by lazy {
-        FirestoreMedicationRepository(firestore)
+        FirestoreMedicationRepository(firestore, getUserId = {
+            val appUser = authRepository.currentUser.value
+            if (appUser != null) {
+                if (appUser.accountType == AccountType.SUPERVISOR) {
+                    appUser.linkedSeniorId.orEmpty()
+                } else {
+                    appUser.id
+                }
+            } else {
+                //no connection
+                ""
+            }
+        })
     }
 }

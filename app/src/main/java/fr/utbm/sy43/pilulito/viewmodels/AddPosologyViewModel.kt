@@ -138,7 +138,7 @@ class AddPosologyViewModel(
                 endDate   = endDate,
                 frequency = frequencyMs,
                 quantity  = state.quantity,
-                userId    = "user_1"
+                userId    = ""
             )
 
             val intakes = generateIntakes(
