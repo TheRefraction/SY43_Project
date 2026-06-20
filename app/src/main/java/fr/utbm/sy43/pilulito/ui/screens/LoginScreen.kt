@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -103,7 +104,7 @@ fun LoginScreen(
                     },
                     placeholder   = { Text("johndoe@email.com") },
                     singleLine    = true,
-                    modifier      = Modifier.fillMaxWidth(),
+                    modifier      = Modifier.fillMaxWidth().testTag("Email"),
                     colors        = OutlinedTextFieldDefaults.colors(
                         unfocusedContainerColor = Color.White,
                         focusedContainerColor   = Color.White,
@@ -132,7 +133,7 @@ fun LoginScreen(
                     placeholder         = { Text("Password") },
                     singleLine          = true,
                     visualTransformation = PasswordVisualTransformation(),
-                    modifier            = Modifier.fillMaxWidth(),
+                    modifier            = Modifier.fillMaxWidth().testTag("Password"),
                     colors              = OutlinedTextFieldDefaults.colors(
                         unfocusedContainerColor = Color.White,
                         focusedContainerColor   = Color.White,

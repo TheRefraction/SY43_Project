@@ -1,15 +1,24 @@
 package fr.utbm.sy43
 
+import android.app.Application
+import androidx.test.core.app.ApplicationProvider
+import fr.utbm.sy43.pilulito.data.models.Drug
+import fr.utbm.sy43.pilulito.data.repositories.MedicationRepository
+import fr.utbm.sy43.pilulito.viewmodels.AddPosologyViewModel
 import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+@RunWith(RobolectricTestRunner::class)
+class ValidationTest {
+
+    private fun createViewModel(
+        repo: MedicationRepository = FakeMedicationRepository(),
+        application: Application = ApplicationProvider.getApplicationContext()
+    ): AddPosologyViewModel {
+        return AddPosologyViewModel(application, repo)
+    }
 
     @Test
     fun onQuantityChanged_updatesQuantity_whenValid() {
@@ -21,7 +30,7 @@ class ExampleUnitTest {
     @Test
     fun onQuantityChanged_ignoresInvalidValue() {
         val viewModel = createViewModel()
-        viewModel.onQuantityChanged(0) // your guard: qty >= 1
+        viewModel.onQuantityChanged(0) // guard: qty >= 1
         assertEquals(1, viewModel.uiState.value.quantity) // unchanged from default
     }
 
