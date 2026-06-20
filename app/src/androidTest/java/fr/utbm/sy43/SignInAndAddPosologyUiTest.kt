@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 class AddPosologyUiTest {
 
     @get:Rule
-    val composeTestRule = createComposeRule() // ✅ no MainActivity, no auth, no real nav graph
+    val composeTestRule = createComposeRule()
 
     @Test
     fun savePrescription_fillsFormAndSaves() {
@@ -26,15 +26,15 @@ class AddPosologyUiTest {
         )
 
         composeTestRule.setContent {
-            val navController = rememberNavController() // ✅ a real NavController, just not driven by MainActivity
+            val navController = rememberNavController()
             val testViewModel = AddPosologyViewModel(
                 application = androidx.compose.ui.platform.LocalContext.current.applicationContext as android.app.Application,
-                medicationRepository = fakeRepo // ✅ your existing fake, no real DB
+                medicationRepository = fakeRepo
             )
 
             AddPosologyScreen(
                 navController = navController,
-                viewModel = testViewModel // ✅ bypasses AppViewModelProvider.Factory entirely
+                viewModel = testViewModel
             )
         }
 
