@@ -21,6 +21,10 @@ interface AuthRepository {
     suspend fun logout()
 
     suspend fun findSeniorByLinkCode(linkCode: String): User?
+    suspend fun updateEmail(newEmail: String)
+    suspend fun updatePassword(newPassword: String)
+    suspend fun deleteAccount()
+
 }
 
 class OfflineAuthRepository : AuthRepository {
@@ -50,6 +54,12 @@ class OfflineAuthRepository : AuthRepository {
             linkedSeniorId = "user_1"
         )
     )
+
+    override suspend fun deleteAccount() {
+        val user = _currentUser.value ?: return
+        users.removeAll { it.id == user.id }
+        _currentUser.value = null
+    }
 
     override suspend fun login(email: String, password: String): User? {
         val user = users.find { it.email == email && it.password == password }
@@ -89,6 +99,20 @@ class OfflineAuthRepository : AuthRepository {
         )
         users.add(newUser)
         return newUser
+    }
+
+    override suspend fun updateEmail(newEmail: String) {
+        val user = _currentUser.value ?: return
+        val updated = user.copy(email = newEmail)
+        users.replaceAll { if (it.id == user.id) updated else it }
+        _currentUser.value = updated
+    }
+
+    override suspend fun updatePassword(newPassword: String) {
+        val user = _currentUser.value ?: return
+        val updated = user.copy(password = newPassword)
+        users.replaceAll { if (it.id == user.id) updated else it }
+        _currentUser.value = updated
     }
 
     override suspend fun findSeniorByLinkCode(linkCode: String): User? {

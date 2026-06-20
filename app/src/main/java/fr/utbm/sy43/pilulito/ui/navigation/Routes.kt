@@ -9,4 +9,5 @@ sealed class Route(val route: String) {
     object PharmacyMap: Route("pharmacy_map")
     object Supervisor : Route("supervisor")
     object Profile : Route("profile")
+    object Settings : Route("settings")
 }
