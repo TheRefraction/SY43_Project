@@ -23,8 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import fr.utbm.sy43.pilulito.ui.navigation.Route
 import fr.utbm.sy43.pilulito.ui.theme.SenPosTheme
+import fr.utbm.sy43.pilulito.ui.navigation.Route
+
 
 @Composable
 fun TopBarComponent(navController: NavHostController) {
@@ -60,7 +61,7 @@ fun TopBarComponent(navController: NavHostController) {
             )
         }
 
-        Button(onClick = { navController.navigate(Route.History.route) },
+        Button(onClick = { navController.navigate(Route.Settings.route) },
             colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
         ) {
             Icon(

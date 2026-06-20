@@ -11,6 +11,7 @@ import fr.utbm.sy43.pilulito.viewmodels.AuthViewModel
 import fr.utbm.sy43.pilulito.viewmodels.HistoryViewModel
 import fr.utbm.sy43.pilulito.viewmodels.HomeViewModel
 import fr.utbm.sy43.pilulito.viewmodels.PharmacyViewModel
+import fr.utbm.sy43.pilulito.viewmodels.SettingsViewModel
 import fr.utbm.sy43.pilulito.viewmodels.SupervisorViewModel
 
 object AppViewModelProvider {
@@ -39,6 +40,10 @@ object AppViewModelProvider {
                 pilulitoApplication().container.authRepository,
                 pilulitoApplication().container.medicationRepository
             )
+        }
+
+        initializer {
+            SettingsViewModel(pilulitoApplication().container.authRepository)
         }
 
         initializer {

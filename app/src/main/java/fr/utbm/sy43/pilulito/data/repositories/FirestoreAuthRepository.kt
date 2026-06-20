@@ -99,6 +99,36 @@ class FirestoreAuthRepository(
         _currentUser.value = null
     }
 
+    override suspend fun updateEmail(newEmail: String) {
+        try {
+            val userId = _currentUser.value?.id ?: return
+            usersCollection.document(userId).update("email", newEmail).await()
+            _currentUser.value = _currentUser.value?.copy(email = newEmail)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun updatePassword(newPassword: String) {
+        try {
+            val userId = _currentUser.value?.id ?: return
+            usersCollection.document(userId).update("password", newPassword).await()
+            _currentUser.value = _currentUser.value?.copy(password = newPassword)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun deleteAccount() {
+        try {
+            val userId = _currentUser.value?.id ?: return
+            usersCollection.document(userId).delete().await()
+            _currentUser.value = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun generateLinkCode(name: String): String {
         val prefix = name.take(4).uppercase().ifBlank { "USER" }
         val suffix = (1000..9999).random()
