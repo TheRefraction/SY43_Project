@@ -1,5 +1,8 @@
 package fr.utbm.sy43.pilulito.ui.screens
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,6 +25,7 @@ import fr.utbm.sy43.pilulito.ui.components.TopBarComponent
 import fr.utbm.sy43.pilulito.viewmodels.DayStats
 import fr.utbm.sy43.pilulito.viewmodels.DrugStat
 import fr.utbm.sy43.pilulito.viewmodels.HistoryViewModel
+import kotlinx.coroutines.launch
 
 private val Orange      = Color(0xFFFF6C00)
 private val OrangeLight = Color(0xFFFFF3EC)
@@ -138,16 +142,25 @@ private fun GlobalScoreCard(taken: Int, total: Int) {
                     color    = Color(0xFF888888)
                 )
             }
+            val animatedProgress = remember { Animatable(0f) }
+
+            LaunchedEffect(ratio) {
+                animatedProgress.animateTo(
+                    targetValue = ratio,
+                    animationSpec = tween(durationMillis = 1000, easing = FastOutSlowInEasing)
+                )
+            }
+
             Box(contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(
-                    progress         = { ratio },
-                    modifier         = Modifier.size(72.dp),
-                    strokeWidth      = 7.dp,
-                    color            = Green,
-                    trackColor       = Red.copy(alpha = 0.25f)
+                    progress    = { animatedProgress.value },
+                    modifier    = Modifier.size(72.dp),
+                    strokeWidth = 7.dp,
+                    color       = Green,
+                    trackColor  = Red.copy(alpha = 0.25f)
                 )
                 Text(
-                    text       = "${(ratio * 100).toInt()}%",
+                    text       = "${(animatedProgress.value * 100).toInt()}%",
                     fontSize   = 15.sp,
                     fontWeight = FontWeight.Bold,
                     color      = Color(0xFF333333)
@@ -237,9 +250,19 @@ private fun DayBar(day: DayStats, maxBarHeight: Float) {
                 .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
             contentAlignment = Alignment.BottomCenter
         ) {
+            val animatedPendingH = remember { Animatable(0f) }
+            val animatedMissedH  = remember { Animatable(0f) }
+            val animatedTakenH   = remember { Animatable(0f) }
+
+            LaunchedEffect(day) {
+                launch { animatedPendingH.animateTo(pendingH.value, tween(800, easing = FastOutSlowInEasing)) }
+                launch { animatedMissedH.animateTo(missedH.value, tween(800, easing = FastOutSlowInEasing)) }
+                launch { animatedTakenH.animateTo(takenH.value, tween(800, easing = FastOutSlowInEasing)) }
+            }
+
             Column(
-                modifier            = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom
+                verticalArrangement = Arrangement.Bottom,
+                modifier = Modifier.fillMaxHeight()
             ) {
                 if (day.total == 0) {
                     Box(
@@ -253,7 +276,7 @@ private fun DayBar(day: DayStats, maxBarHeight: Float) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(pendingH)
+                                .height(animatedPendingH.value.dp)
                                 .background(Grey)
                         )
                     }
@@ -261,7 +284,7 @@ private fun DayBar(day: DayStats, maxBarHeight: Float) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(missedH)
+                                .height(animatedMissedH.value.dp)
                                 .background(Red)
                         )
                     }
@@ -269,8 +292,8 @@ private fun DayBar(day: DayStats, maxBarHeight: Float) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(takenH)
-                                .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                                .height(animatedTakenH.value.dp)
+                                //.clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
                                 .background(Green)
                         )
                     }
@@ -327,22 +350,39 @@ private fun DrugStatRow(stat: DrugStat) {
                 )
             }
 
+            val total = stat.total.coerceAtLeast(1)
+            val takenTarget   = stat.taken.toFloat()   / total
+            val missedTarget  = stat.missed.toFloat()  / total
+            val pendingTarget = stat.pending.toFloat() / total
+
+            val animatedTaken = remember { Animatable(0f) }
+            val animatedMissed = remember { Animatable(0f) }
+            val animatedPending = remember { Animatable(0f) }
+
+            LaunchedEffect(stat) {
+                launch { animatedTaken.animateTo(takenTarget, tween(800, easing = FastOutSlowInEasing)) }
+                launch { animatedMissed.animateTo(missedTarget, tween(800, easing = FastOutSlowInEasing)) }
+                launch { animatedPending.animateTo(pendingTarget, tween(800, easing = FastOutSlowInEasing)) }
+            }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(10.dp)
                     .clip(RoundedCornerShape(50))
             ) {
-                val total = stat.total.coerceAtLeast(1)
-                val takenW   = stat.taken.toFloat()   / total
-                val missedW  = stat.missed.toFloat()  / total
-                val pendingW = stat.pending.toFloat()  / total
+                if (stat.taken > 0)
+                    Box(Modifier.weight(animatedTaken.value.coerceAtLeast(0.0001f)).fillMaxHeight().background(Green))
+                if (stat.missed > 0)
+                    Box(Modifier.weight(animatedMissed.value.coerceAtLeast(0.0001f)).fillMaxHeight().background(Red))
+                if (stat.pending > 0)
+                    Box(Modifier.weight(animatedPending.value.coerceAtLeast(0.0001f)).fillMaxHeight().background(Grey))
 
-                if (stat.taken > 0)   Box(Modifier.weight(takenW).fillMaxHeight().background(Green))
-                if (stat.missed > 0)  Box(Modifier.weight(missedW).fillMaxHeight().background(Red))
-                if (stat.pending > 0) Box(Modifier.weight(pendingW).fillMaxHeight().background(Grey))
+                val remainingWeight = (1f - animatedTaken.value - animatedMissed.value - animatedPending.value).coerceAtLeast(0.0001f)
+                Box(Modifier.weight(remainingWeight).fillMaxHeight().background(Color(0xFFEEEEEE)))
 
-                if (stat.total == 0)  Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFFEEEEEE)))
+                if (stat.total == 0)
+                    Box(Modifier.weight(1f).fillMaxHeight().background(Color(0xFFEEEEEE)))
             }
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
